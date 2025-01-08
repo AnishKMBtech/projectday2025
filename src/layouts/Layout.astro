@@ -1,0 +1,184 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Project Documentation" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="gradient-bg"></div>
+		<div class="noise-overlay"></div>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>
+<style is:global>
+	:root {
+		--mac-bg: #ffffff;
+		--mac-text: #2c2c2c;
+		--mac-border: #f0f0f0;
+		--mac-shadow: rgba(0, 0, 0, 0.1);
+	}
+	
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+		color: var(--mac-text);
+		min-height: 100vh;
+		background: #fff5f7;
+	}
+
+	body {
+		min-height: 100vh;
+		overflow-x: hidden;
+	}
+
+	.gradient-bg {
+		position: fixed;
+		top: -50%;
+		left: -50%;
+		right: -50%;
+		bottom: -50%;
+		width: 200%;
+		height: 200%;
+		background: linear-gradient(-45deg, 
+			#ffe4e6 0%,
+			#ffd1dc 25%, 
+			#ffecf2 50%,
+			#fff0f5 75%,
+			#ffe4e6 100%
+		);
+		background-size: 400% 400%;
+		animation: gradientBG 15s ease infinite;
+		z-index: -2;
+		transform: rotate(0deg);
+		filter: blur(40px);
+	}
+
+	.noise-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+		opacity: 0.1;
+		z-index: -1;
+		pointer-events: none;
+	}
+
+	@keyframes gradientBG {
+		0% {
+			background-position: 0% 50%;
+			transform: rotate(0deg) scale(1);
+		}
+		25% {
+			transform: rotate(1deg) scale(1.02);
+		}
+		50% {
+			background-position: 100% 50%;
+			transform: rotate(-1deg) scale(1.05);
+		}
+		75% {
+			transform: rotate(0.5deg) scale(1.02);
+		}
+		100% {
+			background-position: 0% 50%;
+			transform: rotate(0deg) scale(1);
+		}
+	}
+
+	main {
+		max-width: 800px;
+		margin: 2rem auto;
+		padding: 2rem;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		border-radius: 24px;
+		box-shadow: 
+			0 4px 16px rgba(255, 182, 193, 0.2),
+			0 8px 32px rgba(255, 182, 193, 0.15),
+			0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+		position: relative;
+		z-index: 1;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	main:hover {
+		transform: translateY(-1px);
+		box-shadow: 
+			0 8px 24px rgba(255, 182, 193, 0.25),
+			0 16px 48px rgba(255, 182, 193, 0.2),
+			0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		color: #2c2c2c;
+		margin-bottom: 1rem;
+		text-shadow: 0 1px 1px rgba(255, 182, 193, 0.1);
+	}
+
+	p {
+		margin-bottom: 1rem;
+		line-height: 1.6;
+		color: #444;
+	}
+
+	a {
+		color: #ff69b4;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		position: relative;
+	}
+
+	a:hover {
+		color: #ff1493;
+		text-shadow: 0 0 8px rgba(255, 105, 180, 0.2);
+	}
+
+	code {
+		font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+		background: rgba(255, 255, 255, 0.9);
+		padding: 0.2em 0.4em;
+		border-radius: 4px;
+		font-size: 0.9em;
+		border: 1px solid rgba(255, 182, 193, 0.3);
+		box-shadow: 0 1px 2px rgba(255, 182, 193, 0.1);
+	}
+
+	pre {
+		background: rgba(255, 255, 255, 0.95);
+		padding: 1.5rem;
+		border-radius: 12px;
+		overflow-x: auto;
+		margin-bottom: 1rem;
+		border: 1px solid rgba(255, 182, 193, 0.2);
+		box-shadow: 
+			0 2px 8px rgba(255, 182, 193, 0.1),
+			0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+	}
+
+	pre code {
+		background: none;
+		padding: 0;
+		border: none;
+		box-shadow: none;
+	}
+</style>
